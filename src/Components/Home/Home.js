@@ -1,10 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
+import useTShirts from '../../hooks/useTShirts';
+import Cart from '../Cart/Cart';
+import TShirt from '../TShirt/TShirt';
 import "./Home.css"
 
 const Home = () => {
+    const [tShirts, setTShirts] = useTShirts();
+    const [cart,setCart]=useState([])
+
+    const handleAddToCart=(selectedItem)=>{
+const newCart=[...cart,selectedItem];
+setCart(newCart)
+    }
     return (
-        <div>
-            <h3>This is Home</h3>
+        <div className='home-container'>
+            <div className="tShirt-container">
+                {
+                    tShirts.map(tShirt => <TShirt
+                        key={tShirt._id}
+                        tShirt={tShirt}
+                        handleAddToCart={handleAddToCart}
+                    ></TShirt>)
+                }
+            </div>
+            <div className="cart-container">
+                <Cart></Cart>
+            </div>
         </div>
     );
 };
